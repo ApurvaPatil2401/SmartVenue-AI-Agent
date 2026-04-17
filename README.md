@@ -1,5 +1,6 @@
 # SmartVenue AI-Agent
 ### Next-Gen Stadium Experience Powered by Gemini AI
+**Built with Google Antigravity for the PromptWar Virtual Challenge**
 
 **SmartVenue AI** is a real-time venue management dashboard designed to optimize the fan experience and enhance safety during large-scale events. Built for the **Google PromptWar Virtual Challenge**, this agent leverages Google's Gemini 1.5 Flash to provide instant, context-aware recommendations for crowd control, emergency coordination, and queue management.
 
