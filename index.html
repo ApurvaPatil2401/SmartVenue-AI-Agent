@@ -33,9 +33,9 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             line-height: 1.6;
-            /* Core rule for desktop dashboard (no scroll) */
-            height: 100vh;
-            overflow: hidden;
+            /* Allow main page to scroll */
+            min-height: 100vh;
+            overflow-y: auto;
             display: flex;
             flex-direction: column;
             background-image:
@@ -140,7 +140,7 @@
         /* Main Dashboard Grid */
         main {
             flex: 1;
-            /* Takes remaining space to keep layout 100vh max */
+            /* Takes remaining space */
             width: 100%;
             max-width: 1500px;
             margin: 0 auto;
@@ -149,7 +149,7 @@
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: auto auto 1fr;
             gap: 1.25rem;
-            overflow: hidden;
+            overflow: visible;
         }
 
         /* Setup Section */
