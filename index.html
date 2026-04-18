@@ -8,6 +8,9 @@
         content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com; connect-src 'self' https://generativelanguage.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://www.google-analytics.com;">
     <title>ArenaFlow AI</title>
 
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
     <!-- Google Analytics (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
@@ -794,6 +797,25 @@
             }
         }
 
+        // Security and Optimization Utilities
+        function sanitizeInput(input) {
+            if (!input || typeof input !== 'string') return '';
+            let sanitized = input.replace(/<[^>]*>?/gm, ''); // Remove HTML tags
+            sanitized = sanitized.replace(/javascript:/gi, ''); // Remove JS injection
+            sanitized = sanitized.replace(/on\w+=/gi, ''); // Remove event handlers
+            return sanitized.substring(0, 500); // Limit to 500 chars
+        }
+
+        function debounce(func, delay) {
+            let timeoutId;
+            return function (...args) {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => {
+                    func.apply(this, args);
+                }, delay);
+            };
+        }
+
         // Validate API key format
         function validateApiKeyFormat(key) {
             if (!key || typeof key !== 'string') return false;
@@ -969,29 +991,37 @@
             responseDiv.classList.remove('active');
             btn.disabled = true;
 
-            const prompt = promptBuilder();
-            let aiResponse = await callGemini(systemInstruction, prompt);
+            try {
+                let prompt = promptBuilder();
+                prompt = sanitizeInput(prompt);
 
-            aiResponse = aiResponse.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            aiResponse = aiResponse.replace(/\n/g, '<br>');
+                let aiResponse = await callGemini(systemInstruction, prompt);
 
-            responseDiv.innerHTML = aiResponse;
-            responseDiv.classList.add('active');
+                aiResponse = aiResponse.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                aiResponse = aiResponse.replace(/\n/g, '<br>');
 
-            // Log AI interaction to Firebase
-            logAIQueryToFirestore(btnId, prompt, aiResponse);
+                responseDiv.innerHTML = aiResponse;
+                responseDiv.classList.add('active');
 
-            // Scroll the card to the bottom if the response expands it
-            setTimeout(() => {
-                const card = btn.closest('.card');
-                if (card) {
-                    card.scrollTop = card.scrollHeight;
-                }
-            }, 50);
+                // Log AI interaction to Firebase
+                logAIQueryToFirestore(btnId, prompt, aiResponse);
 
-            btnText.style.display = 'block';
-            loader.style.display = 'none';
-            btn.disabled = false;
+                // Scroll the card to the bottom if the response expands it
+                setTimeout(() => {
+                    const card = btn.closest('.card');
+                    if (card) {
+                        card.scrollTop = card.scrollHeight;
+                    }
+                }, 50);
+            } catch (error) {
+                console.error("Action Error:", error);
+                responseDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
+                responseDiv.classList.add('active');
+            } finally {
+                btnText.style.display = 'block';
+                loader.style.display = 'none';
+                btn.disabled = false;
+            }
         }
 
         // Event Listeners

@@ -1,0 +1,11 @@
+{
+  "name": "arenaflow-ai",
+  "version": "1.0.0",
+  "description": "ArenaFlow AI Web App",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0"
+  }
+}

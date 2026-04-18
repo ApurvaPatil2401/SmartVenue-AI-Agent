@@ -1,0 +1,15 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /ai_queries/{document} {
+      // Allow only AI query writes, no reads
+      allow write: if true;
+      allow read: if false;
+    }
+    // Default deny for all other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

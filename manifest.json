@@ -1,0 +1,8 @@
+{
+  "name": "ArenaFlow AI",
+  "short_name": "ArenaFlow",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#3b82f6",
+  "start_url": "./index.html"
+}
