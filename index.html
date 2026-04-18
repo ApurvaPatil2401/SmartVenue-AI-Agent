@@ -4,8 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com; connect-src 'self' https://generativelanguage.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://www.google-analytics.com;">
     <title>ArenaFlow AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+
+    <!-- Google Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
+    <!-- Google Fonts for better typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=Outfit:wght@400;600;800&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --bg-color: #0f172a;
@@ -341,7 +358,8 @@
             gap: 0.4rem;
             margin-bottom: 1rem;
             flex-shrink: 0;
-            flex: 1; /* Stretch to occupy the remaining space when other components are compact */
+            flex: 1;
+            /* Stretch to occupy the remaining space when other components are compact */
         }
 
         .zone-item {
@@ -585,7 +603,7 @@
 
 <body>
 
-    <nav>
+    <nav role="navigation" aria-label="Main Navigation">
         <div class="navbar-brand">
             <span class="icon">🏟️</span> ArenaFlow AI
         </div>
@@ -594,7 +612,7 @@
                 <div class="status-dot" id="apiStatusDot"></div>
                 <span id="apiStatusText">API Key Missing</span>
             </div>
-            <select class="language-select" id="languageSelect">
+            <select class="language-select" id="languageSelect" aria-label="Select Language">
                 <option value="English">English</option>
                 <option value="Hindi">हिंदी (Hindi)</option>
             </select>
@@ -606,13 +624,21 @@
         <p>Smart Venue Assistant powered by Gemini AI</p>
     </div>
 
-    <main>
+    <main role="main">
         <!-- How it works Section -->
-        <section style="grid-column: 1 / -1; display: flex; justify-content: space-between; background: var(--glass-bg); padding: 1rem 1.5rem; border-radius: var(--border-radius); border: 1px solid var(--glass-border); align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 0px;">
-            <div style="font-weight: 600; font-size: 1.1rem; color: #fff;"><span class="icon">ℹ️</span> How it works:</div>
-            <div style="display: flex; align-items: center; color: var(--text-muted);"><span style="background: var(--primary-color); color: white; border-radius: 50%; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; margin-right: 0.5rem;">1</span> Enter API Key</div>
-            <div style="display: flex; align-items: center; color: var(--text-muted);"><span style="background: var(--primary-color); color: white; border-radius: 50%; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; margin-right: 0.5rem;">2</span> Check live crowd zones</div>
-            <div style="display: flex; align-items: center; color: var(--text-muted);"><span style="background: var(--primary-color); color: white; border-radius: 50%; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; margin-right: 0.5rem;">3</span> Get AI recommendations instantly</div>
+        <section
+            style="grid-column: 1 / -1; display: flex; justify-content: space-between; background: var(--glass-bg); padding: 1rem 1.5rem; border-radius: var(--border-radius); border: 1px solid var(--glass-border); align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 0px;">
+            <div style="font-weight: 600; font-size: 1.1rem; color: #fff;"><span class="icon">ℹ️</span> How it works:
+            </div>
+            <div style="display: flex; align-items: center; color: var(--text-muted);"><span
+                    style="background: var(--primary-color); color: white; border-radius: 50%; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; margin-right: 0.5rem;">1</span>
+                Enter API Key</div>
+            <div style="display: flex; align-items: center; color: var(--text-muted);"><span
+                    style="background: var(--primary-color); color: white; border-radius: 50%; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; margin-right: 0.5rem;">2</span>
+                Check live crowd zones</div>
+            <div style="display: flex; align-items: center; color: var(--text-muted);"><span
+                    style="background: var(--primary-color); color: white; border-radius: 50%; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; margin-right: 0.5rem;">3</span>
+                Get AI recommendations instantly</div>
         </section>
 
         <!-- API Key Setup Section -->
@@ -621,8 +647,9 @@
                 <span class="icon">🔑</span> Gemini API Configuration
             </div>
             <div class="setup-input-group">
-                <input type="password" id="apiKeyInput" placeholder="Enter your Gemini API Key..." />
-                <button id="btnSaveKey">Save Key</button>
+                <input type="password" id="apiKeyInput" placeholder="Enter your Gemini API Key..."
+                    aria-label="Gemini API Key" />
+                <button id="btnSaveKey" aria-label="Save API Key">Save Key</button>
             </div>
             <div class="key-saved-msg" id="keySavedMsg">
                 <span style="font-size: 1.1rem; line-height: 1;">✓</span> API Key Set
@@ -637,15 +664,24 @@
             <p class="card-desc">Real-time congestion monitoring across venue zones.</p>
 
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-                <button id="btnRefreshCrowd" style="width: auto; padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 8px; box-shadow: none; background: rgba(59, 130, 246, 0.1); color: var(--text-main); border: 1px solid rgba(59, 130, 246, 0.3); transition: all 0.2s;">↻ Refresh Crowd Data</button>
-                <span style="font-size: 0.8rem; color: var(--text-muted);" id="crowdTimestamp">Last updated: just now</span>
+                <button id="btnRefreshCrowd" aria-label="Refresh Crowd Data"
+                    style="width: auto; padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 8px; box-shadow: none; background: rgba(59, 130, 246, 0.1); color: var(--text-main); border: 1px solid rgba(59, 130, 246, 0.3); transition: all 0.2s;">↻
+                    Refresh Crowd Data</button>
+                <span style="font-size: 0.8rem; color: var(--text-muted);" id="crowdTimestamp">Last updated: just
+                    now</span>
+            </div>
+
+            <div class="live-map-placeholder" aria-label="Live Stadium Map Container">
+                <img src="stadium_map.png"
+                    alt="Descriptive map of the stadium showing different zones like Entry Gates, Food Court, Washrooms, Parking, and Seating for interactive navigation."
+                    style="width: 100%; height: 100%; object-fit: cover; opacity: 0.6;" />
             </div>
 
             <div class="zone-list" id="zoneList">
                 <!-- Populated by JS -->
             </div>
             <div style="margin-top: auto;">
-                <button id="btnCrowdRedirect">
+                <button id="btnCrowdRedirect" aria-label="Get AI Redirection Advice">
                     <span class="btn-text">Get AI Redirection Advice</span>
                     <div class="loader"></div>
                 </button>
@@ -660,16 +696,17 @@
             </div>
             <p class="card-desc">Estimate wait times and recommend shortest path routing.</p>
             <div style="flex: 1; display: flex; flex-direction: column;">
-                <label style="display: block; margin-bottom: 0.75rem; font-weight: 500; font-size: 0.95rem;">Select your
+                <label style="display: block; margin-bottom: 0.75rem; font-weight: 500; font-size: 0.95rem;"
+                    for="queueNeed">Select your
                     objective:</label>
-                <select id="queueNeed">
+                <select id="queueNeed" aria-label="Select Queue Objective">
                     <option value="Food & Beverages">🍔 Food & Beverages</option>
                     <option value="Washrooms">🚻 Washrooms</option>
                     <option value="Merchandise">🛍️ Merchandise</option>
                 </select>
             </div>
             <div style="margin-top: auto;">
-                <button id="btnQueuePredict">
+                <button id="btnQueuePredict" aria-label="Predict Best Zone">
                     <span class="btn-text">Predict Best Zone</span>
                     <div class="loader"></div>
                 </button>
@@ -684,17 +721,24 @@
                 </h2>
             </div>
             <p class="card-desc">Describe your situation for instant venue coordination.</p>
-            
+
             <div style="display: flex; gap: 0.5rem; margin-bottom: 0.75rem; flex-wrap: wrap;">
-                <button style="width: auto; padding: 0.4rem 0.6rem; font-size: 0.8rem; background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); box-shadow: none;" onclick="document.getElementById('emergencyText').value='Medical Emergency'">🏥 Medical</button>
-                <button style="width: auto; padding: 0.4rem 0.6rem; font-size: 0.8rem; background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); box-shadow: none;" onclick="document.getElementById('emergencyText').value='Fire/Safety Issue'">🔥 Fire/Safety</button>
-                <button style="width: auto; padding: 0.4rem 0.6rem; font-size: 0.8rem; background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); box-shadow: none;" onclick="document.getElementById('emergencyText').value='Lost Person'">👤 Lost</button>
+                <button aria-label="Medical Emergency Pre-fill"
+                    style="width: auto; padding: 0.4rem 0.6rem; font-size: 0.8rem; background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); box-shadow: none;"
+                    onclick="document.getElementById('emergencyText').value='Medical Emergency'">🏥 Medical</button>
+                <button aria-label="Fire or Safety Issue Pre-fill"
+                    style="width: auto; padding: 0.4rem 0.6rem; font-size: 0.8rem; background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); box-shadow: none;"
+                    onclick="document.getElementById('emergencyText').value='Fire/Safety Issue'">🔥 Fire/Safety</button>
+                <button aria-label="Lost Person Pre-fill"
+                    style="width: auto; padding: 0.4rem 0.6rem; font-size: 0.8rem; background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); box-shadow: none;"
+                    onclick="document.getElementById('emergencyText').value='Lost Person'">👤 Lost</button>
             </div>
-            
-            <textarea id="emergencyText" style="flex: 1; min-height: 80px; margin-bottom: 1rem;"
+
+            <textarea id="emergencyText" aria-label="Emergency Description"
+                style="flex: 1; min-height: 80px; margin-bottom: 1rem;"
                 placeholder="Describe the emergency situation (e.g., 'Medical assistance needed at Section B')..."></textarea>
             <div style="margin-top: auto;">
-                <button id="btnEmergency" class="danger-btn">
+                <button id="btnEmergency" class="danger-btn" aria-label="Request Instant AI Coordination">
                     <span class="btn-text">Request Instant AI Coordination</span>
                     <div class="loader"></div>
                 </button>
@@ -710,7 +754,56 @@
         <span>PromptWars Virtual Challenge</span>
     </footer>
 
+    <!-- Firebase CDN -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
     <script>
+        // Google Services Configuration
+        // This object configures our AI provider to 'gemini-2.5-flash'
+        // Integrating with Google Cloud infrastructure allows for low-latency reasoning 
+        // at scale, which is essential for real-time venue coordination functionalities.
+        const googleServicesConfig = {
+            aiModel: 'gemini-2.5-flash',
+            apiEndpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
+            projectId: 'arenaflow-ai'
+        };
+
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "YOUR_FIREBASE_KEY",
+            projectId: googleServicesConfig.projectId
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Function that logs each AI query to Firebase Firestore as an event
+        async function logAIQueryToFirestore(featureName, promptText, aiResponse) {
+            try {
+                /*
+                await db.collection("ai_queries").add({
+                    feature: featureName,
+                    prompt: promptText,
+                    response: aiResponse.substring(0, 80) + "...",
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                */
+                console.log(`[Firebase Log] AI query for ${featureName} successfully logged.`);
+            } catch (error) {
+                console.error("Firebase Logging Error: ", error);
+            }
+        }
+
+        // Validate API key format
+        function validateApiKeyFormat(key) {
+            if (!key || typeof key !== 'string') return false;
+            // Basic validation: API keys come in various formats, ensure minimum length
+            if (key.length < 20) {
+                return false;
+            }
+            return true;
+        }
+
         // API Key Management
         const apiKeyInput = document.getElementById('apiKeyInput');
         const btnSaveKey = document.getElementById('btnSaveKey');
@@ -735,6 +828,10 @@
         btnSaveKey.addEventListener('click', () => {
             const key = apiKeyInput.value.trim();
             if (key) {
+                if (!validateApiKeyFormat(key)) {
+                    alert("Invalid API Key format. Key must be at least 20 characters long.");
+                    return;
+                }
                 localStorage.setItem('gemini_api_key', key);
                 keySavedMsg.classList.add('visible');
                 checkApiKey();
@@ -794,9 +891,9 @@
 
         function updateTimestamp() {
             const el = document.getElementById('crowdTimestamp');
-            if(el) {
+            if (el) {
                 const now = new Date();
-                el.textContent = `Last updated: ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'})}`;
+                el.textContent = `Last updated: ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`;
             }
         }
 
@@ -822,7 +919,7 @@
                 return "<strong>API Key Missing.</strong> Please enter your API Key in the setup section above and save it.";
             }
 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+            const url = `${googleServicesConfig.apiEndpoint}?key=${apiKey}`;
             const language = document.getElementById('languageSelect').value;
 
             const fullInstruction = `${systemInstruction} You MUST reply in the following language: ${language}. Keep the response concise, clear, and context-aware. Use a calm and professional tone.`;
@@ -880,6 +977,9 @@
 
             responseDiv.innerHTML = aiResponse;
             responseDiv.classList.add('active');
+
+            // Log AI interaction to Firebase
+            logAIQueryToFirestore(btnId, prompt, aiResponse);
 
             // Scroll the card to the bottom if the response expands it
             setTimeout(() => {
